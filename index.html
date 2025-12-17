@@ -1,0 +1,624 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Get the Job – Skill Challenge</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+:root{
+  --bg:#0f172a;
+  --card:rgba(255,255,255,.92);
+  --blue:#2563eb;
+  --ok:#16a34a;
+  --bad:#dc2626;
+  --muted:#64748b;
+  --line:rgba(255,255,255,.20);
+  --glass:rgba(255,255,255,.10);
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:system-ui,Segoe UI,Arial,sans-serif;
+  background:
+    radial-gradient(900px 500px at 12% 12%, rgba(37,99,235,.22), transparent 60%),
+    radial-gradient(900px 500px at 88% 10%, rgba(0,0,0,.35), transparent 60%),
+    radial-gradient(900px 600px at 50% 110%, rgba(34,197,94,.10), transparent 60%),
+    linear-gradient(135deg,#020617,#0f172a);
+  color:#fff;
+  min-height:100vh;
+  overflow-x:hidden;
+}
+
+/* subtle pattern */
+body::before{
+  content:"";
+  position:fixed; inset:0;
+  pointer-events:none;
+  background-image:
+    linear-gradient(transparent 0 23px, rgba(255,255,255,0.06) 24px),
+    linear-gradient(90deg, transparent 0 23px, rgba(255,255,255,0.06) 24px);
+  background-size:24px 24px;
+  opacity:0.18;
+  mix-blend-mode:overlay;
+}
+
+.wrap{
+  max-width:1000px;
+  margin:auto;
+  padding:28px 18px 40px;
+  position:relative;
+  z-index:1;
+}
+
+h1{
+  margin:0;
+  font-size:clamp(22px,3vw,32px);
+  font-weight:900;
+}
+
+.subtitle{
+  color:#cbd5f5;
+  font-size:14px;
+  margin-top:6px;
+}
+
+.meta{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  margin:14px 0 10px;
+}
+
+.pill{
+  padding:7px 12px;
+  border-radius:999px;
+  background:rgba(255,255,255,.10);
+  border:1px solid var(--line);
+  font-size:14px;
+  backdrop-filter: blur(10px);
+}
+
+/* progress bar */
+.progressWrap{
+  margin: 6px 0 14px;
+  display:flex;
+  gap:10px;
+  align-items:center;
+}
+.progressOuter{
+  flex:1;
+  height: 12px;
+  border-radius: 999px;
+  overflow:hidden;
+  border:1px solid var(--line);
+  background: rgba(0,0,0,.20);
+}
+.progressInner{
+  height:100%;
+  width:0%;
+  border-radius:999px;
+  background: linear-gradient(90deg, #22c55e, #2563eb);
+  transition: width 240ms ease;
+}
+.progressTxt{
+  font-size:13px;
+  color: rgba(255,255,255,.80);
+  min-width: 140px;
+  text-align:right;
+}
+
+/* board */
+.board{
+  display:grid;
+  grid-template-columns:repeat(7,1fr);
+  gap:10px;
+  margin-bottom:18px;
+}
+
+.cell{
+  background:rgba(255,255,255,.08);
+  border:1px solid var(--line);
+  border-radius:14px;
+  min-height:60px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  position:relative;
+  backdrop-filter: blur(10px);
+}
+
+.cell.done{background:rgba(22,163,74,.20); border-color: rgba(22,163,74,.35);}
+.cell.current{border-color: rgba(96,165,250,.8); background: rgba(37,99,235,.12);}
+
+.pawn{
+  position:absolute;
+  top:-18px;
+  right:-8px;
+  font-size:26px;
+  filter: drop-shadow(0 10px 18px rgba(0,0,0,.35));
+}
+
+/* layout: card + boss */
+.grid{
+  display:grid;
+  grid-template-columns: 1.2fr .8fr;
+  gap: 14px;
+  align-items: start;
+}
+
+.card{
+  background:var(--card);
+  color:#020617;
+  border-radius:18px;
+  padding:18px;
+  box-shadow:0 20px 50px rgba(0,0,0,.40);
+}
+
+/* “Boss” panel */
+.boss{
+  border:1px solid var(--line);
+  background: var(--glass);
+  border-radius:18px;
+  padding:16px;
+  backdrop-filter: blur(12px);
+  box-shadow:0 16px 40px rgba(0,0,0,.22);
+  position: sticky;
+  top: 14px;
+}
+
+.bossTop{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:10px;
+}
+
+.bossTitle{
+  font-weight:900;
+  font-size:14px;
+  color: rgba(255,255,255,.92);
+}
+
+.bossMood{
+  font-size:28px;
+  line-height:1;
+}
+
+.bossBubble{
+  background: rgba(255,255,255,.12);
+  border:1px solid rgba(255,255,255,.18);
+  border-radius:16px;
+  padding:12px;
+  color: rgba(255,255,255,.88);
+  font-size:13px;
+}
+
+/* question UI */
+.qtitle{
+  font-weight:900;
+  margin:0 0 6px;
+}
+
+.qtext{
+  margin:0 0 12px;
+}
+
+.choices{
+  display:grid;
+  gap:8px;
+}
+
+.choice{
+  padding:10px 12px;
+  border-radius:14px;
+  border:1px solid #e5e7eb;
+  background:#fff;
+  cursor:pointer;
+}
+
+input[type=text],select{
+  width:100%;
+  max-width:520px;
+  padding:10px 12px;
+  border-radius:12px;
+  border:1px solid #e5e7eb;
+}
+
+.chips{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  margin-top:10px;
+}
+
+.chip{
+  padding:7px 12px;
+  border-radius:999px;
+  border:1px solid #e5e7eb;
+  background:#fff;
+  cursor:pointer;
+  font-weight:700;
+}
+
+.footer{
+  margin-top:14px;
+  display:flex;
+  gap:10px;
+}
+
+button{
+  padding:10px 14px;
+  border-radius:12px;
+  border:1px solid #e5e7eb;
+  cursor:pointer;
+  font-weight:800;
+}
+
+button.primary{
+  background:var(--blue);
+  color:#fff;
+  border-color:var(--blue);
+}
+
+button:disabled{opacity:.5;cursor:not-allowed}
+
+.feedback{
+  margin-top:10px;
+  padding:10px 12px;
+  border-radius:14px;
+  font-weight:900;
+  display:none;
+}
+
+.feedback.ok{display:block; background:#dcfce7; color:var(--ok);}
+.feedback.bad{display:block; background:#fee2e2; color:var(--bad);}
+
+.mini{
+  font-size:13px;
+  color: var(--muted);
+  margin-top: 8px;
+}
+
+@media(max-width:860px){
+  .board{grid-template-columns:repeat(4,1fr)}
+  .grid{grid-template-columns:1fr}
+  .boss{position:relative; top:auto;}
+}
+@media(max-width:520px){
+  .board{grid-template-columns:repeat(2,1fr)}
+}
+</style>
+</head>
+
+<body>
+<div class="wrap">
+
+  <h1>💼 Get the Job</h1>
+  <div class="subtitle">7 real situations · Pass <b>6</b> to get hired</div>
+
+  <div class="meta">
+    <div class="pill">Score: <b id="score">0</b>/7</div>
+    <div class="pill">Stage: <b id="step">1</b>/7</div>
+    <div class="pill">Goal: <b>6/7</b></div>
+  </div>
+
+  <div class="progressWrap">
+    <div class="progressOuter"><div class="progressInner" id="prog"></div></div>
+    <div class="progressTxt" id="progTxt">Progress: 0%</div>
+  </div>
+
+  <div class="board" id="board"></div>
+
+  <div class="grid">
+    <div class="card">
+      <div class="qtitle" id="qtitle"></div>
+      <div class="qtext" id="qtext"></div>
+      <div id="qarea"></div>
+
+      <div id="feedback" class="feedback"></div>
+
+      <div class="footer">
+        <button class="primary" id="submit">Submit</button>
+        <button id="next" disabled>Next</button>
+      </div>
+      <div class="mini" id="hint"></div>
+    </div>
+
+    <aside class="boss">
+      <div class="bossTop">
+        <div class="bossTitle">Hiring Manager</div>
+        <div class="bossMood" id="bossMood">🤨</div>
+      </div>
+      <div class="bossBubble" id="bossText">
+        I’m waiting for your answer. Think like a professional.
+      </div>
+    </aside>
+  </div>
+
+</div>
+
+<script>
+const TOTAL=7, PASS=6;
+let current=0, score=0, answered=false;
+
+const board=document.getElementById('board');
+const prog=document.getElementById('prog');
+const progTxt=document.getElementById('progTxt');
+
+const scoreEl=document.getElementById('score');
+const stepEl=document.getElementById('step');
+
+const qtitle=document.getElementById('qtitle');
+const qtext=document.getElementById('qtext');
+const qarea=document.getElementById('qarea');
+
+const feedback=document.getElementById('feedback');
+const submit=document.getElementById('submit');
+const next=document.getElementById('next');
+
+const hint=document.getElementById('hint');
+const bossMood=document.getElementById('bossMood');
+const bossText=document.getElementById('bossText');
+
+function setBoss(state){
+  // state: "waiting" | "ok" | "bad" | "result"
+  if(state==="waiting"){
+    bossMood.textContent="🤨";
+    bossText.textContent="I’m waiting for your answer. Think like a professional.";
+    return;
+  }
+  if(state==="ok"){
+    bossMood.textContent="🙂";
+    bossText.textContent="Good. That sounds like someone I can hire.";
+    return;
+  }
+  if(state==="bad"){
+    bossMood.textContent="😬";
+    bossText.textContent="That’s risky. Think again next time.";
+    return;
+  }
+  if(state==="result"){
+    bossMood.textContent="🧑‍💼";
+    bossText.textContent="Final decision is based on your performance.";
+  }
+}
+
+function setProgress(){
+  const pct = Math.round((current / TOTAL) * 100);
+  prog.style.width = pct + "%";
+  progTxt.textContent = "Progress: " + pct + "%";
+}
+
+const challenges = [
+
+/* 1: MCQ */
+{
+  title:"Stage 1 – Interview question",
+  text:"You must decide with unclear data and little time. Which skill helps most?",
+  render:c=>c.innerHTML=`
+  <div class="choices">
+    <label class="choice"><input type="radio" name="q1" value="a"> Leadership</label>
+    <label class="choice"><input type="radio" name="q1" value="b"> Critical thinking</label>
+    <label class="choice"><input type="radio" name="q1" value="c"> Creativity</label>
+  </div>`,
+  check:()=>document.querySelector('input[name=q1]:checked')?.value==="b"
+},
+
+/* 2: word pick (1 correct, 2 misleading, 2 from presentation) */
+{
+  title:"Stage 2 – Finish the sentence",
+  text:"“Resilience is built when we keep working despite ________ and setbacks.”",
+  render:c=>{
+    c.innerHTML=`
+      <input id="w2" readonly placeholder="click a word below…">
+      <div class="chips">
+        <span class="chip" data="difficulties">difficulties</span>
+        <span class="chip" data="pressure">pressure</span>
+        <span class="chip" data="stress">stress</span>
+        <span class="chip" data="leadership">leadership</span>
+        <span class="chip" data="creativity">creativity</span>
+      </div>
+      <div class="mini">Pick one. You will get feedback only after <b>Submit</b>.</div>
+    `;
+    c.querySelectorAll('.chip').forEach(x=>{
+      x.onclick=()=>c.querySelector('#w2').value=x.getAttribute('data');
+    });
+  },
+  check:()=>document.getElementById('w2').value==="difficulties"
+},
+
+/* 3: True/False */
+{
+  title:"Stage 3 – True or False",
+  text:"Data literacy means understanding and interpreting data, not just collecting it.",
+  render:c=>c.innerHTML=`
+    <div class="choices">
+      <label class="choice"><input type="radio" name="q3" value="t"> True</label>
+      <label class="choice"><input type="radio" name="q3" value="f"> False</label>
+    </div>`,
+  check:()=>document.querySelector('input[name=q3]:checked')?.value==="t"
+},
+
+/* 4: Matching (dropdowns) */
+{
+  title:"Stage 4 – Match the situation",
+  text:"Pick the best option for each situation.",
+  render:c=>c.innerHTML=`
+    <div class="mini"><b>A:</b> New tool, same deadline</div>
+    <select id="a4">
+      <option value=""></option>
+      <option value="adapt">Adaptability</option>
+      <option value="crea">Creativity</option>
+      <option value="emp">Empathy</option>
+    </select>
+
+    <div class="mini" style="margin-top:10px;"><b>B:</b> Explain numbers to support a decision</div>
+    <select id="b4">
+      <option value=""></option>
+      <option value="lead">Leadership</option>
+      <option value="data">Data literacy</option>
+      <option value="res">Resilience</option>
+    </select>`,
+  check:()=>document.getElementById('a4').value==="adapt" && document.getElementById('b4').value==="data"
+},
+
+/* 5: Ordering */
+{
+  title:"Stage 5 – Order the steps",
+  text:"Click the steps in the correct order.",
+  render:c=>{
+    c.innerHTML=`
+      <div class="mini"><b>Your order:</b></div>
+      <div id="box5" class="mini" style="padding:10px;border:1px dashed #cbd5e1;border-radius:12px;background:rgba(255,255,255,.6);min-height:40px;"></div>
+      <div class="chips">
+        <span class="chip" data="id">Identify problem</span>
+        <span class="chip" data="an">Analyze data</span>
+        <span class="chip" data="co">Compare options</span>
+        <span class="chip" data="ch">Choose & justify</span>
+      </div>
+      <div class="mini">Tip: It’s a simple workflow.</div>
+    `;
+    let arr=[];
+    const box=c.querySelector('#box5');
+    c.querySelectorAll('.chip').forEach(x=>{
+      x.onclick=()=>{
+        const v=x.getAttribute('data');
+        if(arr.includes(v)) return;
+        arr.push(v);
+        box.textContent = arr.join(" → ");
+      };
+    });
+    window.__o5=arr;
+  },
+  check:()=> (window.__o5||[]).join()==="id,an,co,ch"
+},
+
+/* 6: Scenario dropdown */
+{
+  title:"Stage 6 – Career change",
+  text:"Your role changes because of AI. What skill matters most?",
+  render:c=>c.innerHTML=`
+    <select id="q6">
+      <option value=""></option>
+      <option value="crit">Critical thinking</option>
+      <option value="adapt">Adaptability & resilience</option>
+      <option value="lead">Leadership</option>
+    </select>`,
+  check:()=>document.getElementById('q6').value==="adapt"
+},
+
+/* 7: Boss case (exactly 3) with trap option */
+{
+  title:"Stage 7 – Boss case",
+  text:"AI system fails, clients complain, team is stressed. Select exactly 3 actions.",
+  render:c=>c.innerHTML=`
+    <div class="mini">Rule: choose <b>exactly 3</b>.</div>
+    <div class="choices">
+      <label class="choice"><input type="checkbox" name="bc" value="panic"> Change random things fast</label>
+      <label class="choice"><input type="checkbox" name="bc" value="data"> Check errors and user reports</label>
+      <label class="choice"><input type="checkbox" name="bc" value="approval"> Wait for full management approval before acting</label>
+      <label class="choice"><input type="checkbox" name="bc" value="plan"> Test the fastest possible cause</label>
+      <label class="choice"><input type="checkbox" name="bc" value="blame"> Blame someone publicly</label>
+      <label class="choice"><input type="checkbox" name="bc" value="contain"> Turn off risky feature and inform clients</label>
+    </div>
+    <div class="mini">Hint: facts → fast test → reduce damage.</div>
+  `,
+  check:()=>{
+    const p=[...document.querySelectorAll('input[name=bc]:checked')].map(x=>x.value);
+    return p.length===3 && p.includes("data") && p.includes("plan") && p.includes("contain");
+  }
+}
+
+];
+
+function render(){
+  // board
+  board.innerHTML="";
+  for(let i=0;i<TOTAL;i++){
+    const d=document.createElement('div');
+    d.className="cell"+(i<current?" done":"")+(i===current?" current":"");
+    d.textContent="Stage "+(i+1);
+    if(i===current){
+      const p=document.createElement('div');
+      p.className="pawn";
+      p.textContent="🧍";
+      d.appendChild(p);
+    }
+    board.appendChild(d);
+  }
+
+  // header
+  scoreEl.textContent=score;
+  stepEl.textContent=current+1;
+  setProgress();
+
+  // question
+  const ch=challenges[current];
+  qtitle.textContent=ch.title;
+  qtext.textContent=ch.text;
+
+  qarea.innerHTML="";
+  feedback.style.display="none";
+  feedback.className="feedback";
+
+  submit.disabled=false;
+  next.disabled=true;
+  answered=false;
+
+  hint.textContent = (current===TOTAL-1) ? "Final boss stage. Read carefully." : "";
+  setBoss("waiting");
+
+  ch.render(qarea);
+}
+
+submit.onclick=()=>{
+  if(answered) return;
+  const ok = challenges[current].check();
+
+  feedback.style.display="block";
+  feedback.className = "feedback " + (ok ? "ok" : "bad");
+  feedback.textContent = ok ? "Correct." : "Not correct.";
+
+  if(ok) score++;
+  scoreEl.textContent=score;
+
+  setBoss(ok ? "ok" : "bad");
+
+  answered=true;
+  submit.disabled=true;
+  next.disabled=false;
+};
+
+next.onclick=()=>{
+  current++;
+  if(current>=TOTAL){
+    // results
+    setBoss("result");
+    setProgress();
+    prog.style.width = "100%";
+    progTxt.textContent = "Progress: 100%";
+
+    qtitle.textContent="Result";
+    qtext.innerHTML=`Score: <b>${score}/7</b> · Requirement: <b>${PASS}/7</b>`;
+    qarea.innerHTML = `
+      <div class="mini" style="margin-top:6px;">
+        ${score>=PASS
+          ? "<b>🎉 You got the job!</b> The manager likes your decisions under pressure."
+          : "<b>❌ Not hired.</b> You need better decision-making in real situations."}
+      </div>
+    `;
+    feedback.style.display="none";
+    submit.disabled=true;
+    next.disabled=true;
+    return;
+  }
+  render();
+};
+
+render();
+</script>
+
+</body>
+</html>
