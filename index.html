@@ -1,745 +1,667 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Get the Job</title>
-  <style>
-    :root{
-      --bg1:#071023;
-      --bg2:#0b1631;
-      --card:#0f1c35;
-      --card2:#0d182d;
-      --text:#eaf1ff;
-      --muted:rgba(234,241,255,.72);
-      --line:rgba(234,241,255,.12);
-      --pill:rgba(234,241,255,.08);
-      --accent:#3b82f6;
-      --good:#22c55e;
-      --bad:#ef4444;
-      --warn:#f59e0b;
-      --shadow: 0 18px 45px rgba(0,0,0,.35);
-      --r: 22px;
-    }
-    *{box-sizing:border-box}
-    body{
-      margin:0;
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
-      color:var(--text);
-      background:
-        radial-gradient(900px 420px at 15% 15%, rgba(59,130,246,.25), transparent 65%),
-        radial-gradient(800px 380px at 70% 25%, rgba(245,158,11,.18), transparent 65%),
-        radial-gradient(1000px 520px at 40% 70%, rgba(34,197,94,.12), transparent 65%),
-        linear-gradient(180deg, var(--bg1), var(--bg2));
-      min-height:100vh;
-    }
-    .wrap{
-      max-width: 1180px;
-      margin: 0 auto;
-      padding: 34px 18px 42px;
-    }
-    .top{
-      display:flex;
-      align-items:flex-end;
-      justify-content:space-between;
-      gap:14px;
-      flex-wrap:wrap;
-      margin-bottom:18px;
-    }
-    .brand{
-      display:flex; align-items:center; gap:14px;
-    }
-    .logo{
-      width:42px; height:42px; border-radius:12px;
-      display:grid; place-items:center;
-      background: rgba(234,241,255,.08);
-      border: 1px solid rgba(234,241,255,.12);
-      box-shadow: 0 10px 25px rgba(0,0,0,.22);
-      font-size:20px;
-    }
-    h1{margin:0; font-size:44px; letter-spacing:-.02em; line-height:1}
-    .subtitle{margin:8px 0 0; color:var(--muted); font-size:16px}
-    .metaRow{
-      display:flex; gap:12px; flex-wrap:wrap;
-      align-items:center;
-    }
-    .pill{
-      background: var(--pill);
-      border: 1px solid var(--line);
-      border-radius: 999px;
-      padding: 10px 14px;
-      display:flex;
-      gap:8px;
-      align-items:center;
-      min-width: 122px;
-      justify-content:center;
-      box-shadow: 0 10px 25px rgba(0,0,0,.18);
-    }
-    .pill b{font-size:16px}
-    .pill span{color:var(--muted); font-size:14px}
-    .progressWrap{
-      display:flex; gap:16px; align-items:center;
-      margin: 18px 0 20px;
-    }
-    .bar{
-      flex:1;
-      height:14px;
-      background: rgba(234,241,255,.06);
-      border: 1px solid rgba(234,241,255,.12);
-      border-radius: 999px;
-      overflow:hidden;
-      position:relative;
-    }
-    .bar > i{
-      display:block;
-      height:100%;
-      width:0%;
-      background: linear-gradient(90deg, rgba(59,130,246,.95), rgba(59,130,246,.35));
-      border-radius: 999px;
-      transition: width .35s ease;
-    }
-    .progressText{color:var(--muted); min-width:140px; text-align:right}
+<meta charset="utf-8">
+<title>Get the Job – Skill Challenge</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
-    .grid{
-      display:grid;
-      grid-template-columns: 1.45fr .9fr;
-      gap: 18px;
-    }
-    @media (max-width: 980px){
-      .grid{grid-template-columns:1fr}
-    }
+<style>
+:root{
+  --bg:#0f172a;
+  --card:rgba(255,255,255,.92);
+  --blue:#2563eb;
+  --ok:#16a34a;
+  --bad:#dc2626;
+  --muted:#64748b;
+  --line:rgba(255,255,255,.20);
+  --glass:rgba(255,255,255,.10);
+}
 
-    .panel{
-      background: rgba(15,28,53,.6);
-      border: 1px solid rgba(234,241,255,.12);
-      border-radius: var(--r);
-      box-shadow: var(--shadow);
-      overflow:hidden;
-    }
-    .panelInner{padding: 18px;}
-    .questionCard{
-      background: rgba(234,241,255,.06);
-      border: 1px solid rgba(234,241,255,.12);
-      border-radius: 18px;
-      padding: 18px;
-      min-height: 210px;
-    }
-    .qHeader{
-      display:flex; gap:10px; align-items:center; justify-content:space-between; flex-wrap:wrap;
-      margin-bottom: 10px;
-    }
-    .tag{
-      display:inline-flex; align-items:center; gap:8px;
-      padding: 7px 12px;
-      border-radius: 999px;
-      background: rgba(59,130,246,.14);
-      border: 1px solid rgba(59,130,246,.28);
-      color: rgba(234,241,255,.92);
-      font-size: 13px;
-    }
-    .tag i{opacity:.9}
-    .difficulty{
-      color: var(--muted);
-      font-size: 13px;
-    }
-    .qTitle{
-      font-size: 18px;
-      margin: 10px 0 8px;
-      letter-spacing: -.01em;
-    }
-    .qText{
-      margin: 0;
-      color: rgba(234,241,255,.86);
-      line-height: 1.45;
-      white-space: pre-wrap;
-    }
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:system-ui,Segoe UI,Arial,sans-serif;
+  background:
+    radial-gradient(900px 500px at 12% 12%, rgba(37,99,235,.22), transparent 60%),
+    radial-gradient(900px 500px at 88% 10%, rgba(0,0,0,.35), transparent 60%),
+    radial-gradient(900px 600px at 50% 110%, rgba(34,197,94,.10), transparent 60%),
+    linear-gradient(135deg,#020617,#0f172a);
+  color:#fff;
+  min-height:100vh;
+  overflow-x:hidden;
+}
 
-    .answers{
-      display:grid;
-      gap: 10px;
-      margin-top: 14px;
-    }
-    .ans{
-      display:flex;
-      gap: 10px;
-      align-items:flex-start;
-      padding: 12px 14px;
-      border-radius: 16px;
-      cursor:pointer;
-      background: rgba(234,241,255,.04);
-      border: 1px solid rgba(234,241,255,.12);
-      transition: transform .08s ease, background .12s ease, border-color .12s ease;
-      user-select:none;
-    }
-    .ans:hover{
-      background: rgba(234,241,255,.06);
-      transform: translateY(-1px);
-    }
-    .radio{
-      width:18px; height:18px; border-radius: 999px;
-      border: 2px solid rgba(234,241,255,.30);
-      margin-top: 2px;
-      position:relative;
-      flex:0 0 auto;
-    }
-    .ans.selected{
-      border-color: rgba(59,130,246,.55);
-      background: rgba(59,130,246,.10);
-    }
-    .ans.selected .radio{
-      border-color: rgba(59,130,246,.85);
-    }
-    .ans.selected .radio::after{
-      content:"";
-      position:absolute; inset:3px;
-      border-radius:999px;
-      background: rgba(59,130,246,.95);
-    }
-    .ans .txt b{display:block; margin-bottom:2px}
-    .ans .txt small{color:var(--muted)}
+body::before{
+  content:"";
+  position:fixed; inset:0;
+  pointer-events:none;
+  background-image:
+    linear-gradient(transparent 0 23px, rgba(255,255,255,0.06) 24px),
+    linear-gradient(90deg, transparent 0 23px, rgba(255,255,255,0.06) 24px);
+  background-size:24px 24px;
+  opacity:0.18;
+  mix-blend-mode:overlay;
+}
 
-    .actions{
-      display:flex;
-      gap: 12px;
-      align-items:center;
-      margin-top: 14px;
-      flex-wrap:wrap;
-    }
-    button{
-      border:0;
-      border-radius: 14px;
-      padding: 11px 16px;
-      font-weight: 700;
-      cursor:pointer;
-      transition: transform .08s ease, opacity .12s ease;
-      letter-spacing: -.01em;
-    }
-    button:active{transform: scale(.99)}
-    .primary{background: var(--accent); color:#061127}
-    .ghost{background: rgba(234,241,255,.08); color:var(--text); border:1px solid rgba(234,241,255,.12)}
-    .disabled{opacity:.45; cursor:not-allowed}
+.wrap{
+  max-width:1000px;
+  margin:auto;
+  padding:28px 18px 40px;
+  position:relative;
+  z-index:1;
+}
 
-    .manager{
-      padding: 18px;
-    }
-    .managerTop{
-      display:flex; align-items:center; justify-content:space-between; gap:10px;
-      margin-bottom: 12px;
-    }
-    .managerTitle{font-size: 18px; margin:0}
-    .emoji{
-      width:34px; height:34px; border-radius: 12px;
-      display:grid; place-items:center;
-      background: rgba(234,241,255,.08);
-      border: 1px solid rgba(234,241,255,.12);
-      font-size: 18px;
-    }
-    .bubble{
-      background: rgba(234,241,255,.06);
-      border: 1px solid rgba(234,241,255,.12);
-      border-radius: 16px;
-      padding: 12px 14px;
-      color: rgba(234,241,255,.90);
-      line-height: 1.35;
-      min-height: 66px;
-      display:flex; align-items:center;
-    }
-    .hintBox{
-      margin-top: 12px;
-      padding: 12px 14px;
-      border-radius: 16px;
-      border: 1px solid rgba(234,241,255,.12);
-      background: rgba(234,241,255,.04);
-      color: var(--muted);
-      font-size: 13px;
-      line-height: 1.35;
-    }
-    .resultPill{
-      margin-top: 12px;
-      padding: 10px 12px;
-      border-radius: 999px;
-      display:inline-flex;
-      gap:8px;
-      align-items:center;
-      border:1px solid rgba(234,241,255,.12);
-      background: rgba(234,241,255,.06);
-      color: rgba(234,241,255,.90);
-      font-size: 13px;
-    }
-    .good{border-color: rgba(34,197,94,.35); background: rgba(34,197,94,.12)}
-    .bad{border-color: rgba(239,68,68,.35); background: rgba(239,68,68,.12)}
-    .warn{border-color: rgba(245,158,11,.35); background: rgba(245,158,11,.12)}
+h1{
+  margin:0;
+  font-size:clamp(22px,3vw,32px);
+  font-weight:900;
+}
 
-    .modal{
-      position:fixed; inset:0;
-      background: rgba(0,0,0,.55);
-      display:none;
-      align-items:center;
-      justify-content:center;
-      padding:18px;
-    }
-    .modal.show{display:flex}
-    .modalCard{
-      width:min(760px, 100%);
-      background: rgba(12,18,34,.92);
-      border:1px solid rgba(234,241,255,.14);
-      border-radius: 22px;
-      box-shadow: 0 22px 70px rgba(0,0,0,.5);
-      padding: 18px;
-    }
-    .modalCard h2{margin:0 0 8px; letter-spacing:-.02em}
-    .modalCard p{margin:0; color: var(--muted); line-height:1.45}
-    .modalGrid{
-      display:grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 10px;
-      margin: 14px 0;
-    }
-    @media (max-width:720px){ .modalGrid{grid-template-columns:1fr} }
-    .stat{
-      padding: 12px 14px;
-      border-radius: 16px;
-      border: 1px solid rgba(234,241,255,.12);
-      background: rgba(234,241,255,.06);
-    }
-    .stat b{font-size:18px}
-    .stat small{display:block; color:var(--muted); margin-top:3px}
-  </style>
+.subtitle{
+  color:#cbd5f5;
+  font-size:14px;
+  margin-top:6px;
+}
+
+.meta{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  margin:14px 0 10px;
+}
+
+.pill{
+  padding:7px 12px;
+  border-radius:999px;
+  background:rgba(255,255,255,.10);
+  border:1px solid var(--line);
+  font-size:14px;
+  backdrop-filter: blur(10px);
+}
+
+.progressWrap{
+  margin: 6px 0 14px;
+  display:flex;
+  gap:10px;
+  align-items:center;
+}
+.progressOuter{
+  flex:1;
+  height: 12px;
+  border-radius: 999px;
+  overflow:hidden;
+  border:1px solid var(--line);
+  background: rgba(0,0,0,.20);
+}
+.progressInner{
+  height:100%;
+  width:0%;
+  border-radius:999px;
+  background: linear-gradient(90deg, #22c55e, #2563eb);
+  transition: width 240ms ease;
+}
+.progressTxt{
+  font-size:13px;
+  color: rgba(255,255,255,.80);
+  min-width: 140px;
+  text-align:right;
+}
+
+.board{
+  display:grid;
+  grid-template-columns:repeat(7,1fr);
+  gap:10px;
+  margin-bottom:18px;
+}
+
+.cell{
+  background:rgba(255,255,255,.08);
+  border:1px solid var(--line);
+  border-radius:14px;
+  min-height:60px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  position:relative;
+  backdrop-filter: blur(10px);
+}
+
+.cell.done{background:rgba(22,163,74,.20); border-color: rgba(22,163,74,.35);}
+.cell.current{border-color: rgba(96,165,250,.8); background: rgba(37,99,235,.12);}
+
+.pawn{
+  position:absolute;
+  top:-18px;
+  right:-8px;
+  font-size:26px;
+  filter: drop-shadow(0 10px 18px rgba(0,0,0,.35));
+}
+
+.grid{
+  display:grid;
+  grid-template-columns: 1.2fr .8fr;
+  gap: 14px;
+  align-items: start;
+}
+
+.card{
+  background:var(--card);
+  color:#020617;
+  border-radius:18px;
+  padding:18px;
+  box-shadow:0 20px 50px rgba(0,0,0,.40);
+}
+
+.boss{
+  border:1px solid var(--line);
+  background: var(--glass);
+  border-radius:18px;
+  padding:16px;
+  backdrop-filter: blur(12px);
+  box-shadow:0 16px 40px rgba(0,0,0,.22);
+  position: sticky;
+  top: 14px;
+}
+
+.bossTop{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:10px;
+}
+
+.bossTitle{
+  font-weight:900;
+  font-size:14px;
+  color: rgba(255,255,255,.92);
+}
+
+.bossMood{
+  font-size:28px;
+  line-height:1;
+}
+
+.bossBubble{
+  background: rgba(255,255,255,.12);
+  border:1px solid rgba(255,255,255,.18);
+  border-radius:16px;
+  padding:12px;
+  color: rgba(255,255,255,.88);
+  font-size:13px;
+}
+
+.qtitle{
+  font-weight:900;
+  margin:0 0 6px;
+}
+
+.qtext{
+  margin:0 0 12px;
+}
+
+.choices{
+  display:grid;
+  gap:8px;
+}
+
+.choice{
+  padding:10px 12px;
+  border-radius:14px;
+  border:1px solid #e5e7eb;
+  background:#fff;
+  cursor:pointer;
+}
+
+input[type=text],select{
+  width:100%;
+  max-width:520px;
+  padding:10px 12px;
+  border-radius:12px;
+  border:1px solid #e5e7eb;
+}
+
+.chips{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  margin-top:10px;
+}
+
+.chip{
+  padding:7px 12px;
+  border-radius:999px;
+  border:1px solid #e5e7eb;
+  background:#fff;
+  cursor:pointer;
+  font-weight:700;
+}
+
+.footer{
+  margin-top:14px;
+  display:flex;
+  gap:10px;
+}
+
+button{
+  padding:10px 14px;
+  border-radius:12px;
+  border:1px solid #e5e7eb;
+  cursor:pointer;
+  font-weight:800;
+}
+
+button.primary{
+  background:var(--blue);
+  color:#fff;
+  border-color:var(--blue);
+}
+
+button:disabled{opacity:.5;cursor:not-allowed}
+
+.feedback{
+  margin-top:10px;
+  padding:10px 12px;
+  border-radius:14px;
+  font-weight:900;
+  display:none;
+}
+
+.feedback.ok{display:block; background:#dcfce7; color:var(--ok);}
+.feedback.bad{display:block; background:#fee2e2; color:var(--bad);}
+
+.feedback.neutral{display:block; background:#e0f2fe; color:#0369a1;}
+
+.mini{
+  font-size:13px;
+  color: var(--muted);
+  margin-top: 8px;
+}
+
+@media(max-width:860px){
+  .board{grid-template-columns:repeat(4,1fr)}
+  .grid{grid-template-columns:1fr}
+  .boss{position:relative; top:auto;}
+}
+@media(max-width:520px){
+  .board{grid-template-columns:repeat(2,1fr)}
+}
+</style>
 </head>
+
 <body>
-  <div class="wrap">
-    <div class="top">
-      <div>
-        <div class="brand">
-          <div class="logo">💼</div>
-          <div>
-            <h1>Get the Job</h1>
-            <div class="subtitle" id="subtitle">7 real situations · Pass 6 to get hired</div>
-          </div>
-        </div>
-      </div>
+<div class="wrap">
 
-      <div class="metaRow">
-        <div class="pill"><span>Score:</span> <b id="scorePill">0/7</b></div>
-        <div class="pill"><span>Stage:</span> <b id="stagePill">1/7</b></div>
-        <div class="pill"><span>Goal:</span> <b id="goalPill">6/7</b></div>
-      </div>
-    </div>
+  <h1>💼 Get the Job</h1>
+  <div class="subtitle">7 real situations · Pass <b>6</b> to get hired</div>
 
-    <div class="progressWrap">
-      <div class="bar"><i id="barFill"></i></div>
-      <div class="progressText" id="progressText">Progress: 0%</div>
-    </div>
-
-    <div class="grid">
-      <!-- LEFT: question -->
-      <div class="panel">
-        <div class="panelInner">
-          <div class="questionCard">
-            <div class="qHeader">
-              <div class="tag" id="skillTag"><i>🎯</i><span>Skill focus</span></div>
-              <div class="difficulty" id="difficulty">Difficulty: Easy</div>
-            </div>
-
-            <div class="qTitle" id="qTitle">Loading…</div>
-            <p class="qText" id="qText"></p>
-
-            <div class="answers" id="answers"></div>
-
-            <div class="actions">
-              <button class="primary" id="submitBtn">Submit</button>
-              <button class="ghost disabled" id="nextBtn" disabled>Next</button>
-              <button class="ghost" id="restartBtn" title="Restart the game">Restart</button>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- RIGHT: manager -->
-      <div class="panel">
-        <div class="manager">
-          <div class="managerTop">
-            <h3 class="managerTitle">Hiring Manager</h3>
-            <div class="emoji" id="emoji">🙂</div>
-          </div>
-          <div class="bubble" id="bubble">I’m waiting for your answer. Think like a professional.</div>
-          <div class="hintBox" id="hintBox">
-            Tip: This game checks whether you can apply <b>future skills</b> (not memorize definitions).
-          </div>
-          <div class="resultPill warn" id="resultPill" style="display:none;">—</div>
-        </div>
-      </div>
-    </div>
+  <div class="meta">
+    <div class="pill">Score: <b id="score">0</b>/7</div>
+    <div class="pill">Stage: <b id="step">1</b>/7</div>
+    <div class="pill">Goal: <b>6/7</b></div>
   </div>
 
-  <!-- RESULT MODAL -->
-  <div class="modal" id="modal">
-    <div class="modalCard">
-      <h2 id="modalTitle">Result</h2>
-      <p id="modalDesc"></p>
-      <div class="modalGrid">
-        <div class="stat"><b id="mScore">0/7</b><small>Final score</small></div>
-        <div class="stat"><b id="mGoal">6/7</b><small>Goal required</small></div>
-        <div class="stat"><b id="mTime">0:00</b><small>Time</small></div>
-      </div>
-      <div class="actions">
-        <button class="primary" id="playAgainBtn">Play again</button>
-        <button class="ghost" id="closeBtn">Close</button>
-      </div>
-      <p style="margin-top:10px;color:rgba(234,241,255,.6);font-size:12px;">
-        Teacher tip: pick 3 students with the highest score; ties → shortest time.
-      </p>
-    </div>
+  <div class="progressWrap">
+    <div class="progressOuter"><div class="progressInner" id="prog"></div></div>
+    <div class="progressTxt" id="progTxt">Progress: 0%</div>
   </div>
 
-  <script>
-    // =========================
-    // GAME DATA (EDIT HERE)
-    // =========================
-    const GOAL = 6;
+  <div class="board" id="board"></div>
 
-    // Top 3 skills
-    const SKILL_LABELS = {
-      data: "Data Literacy & Digital Fluency",
-      critical: "Critical Thinking & Problem-Solving",
-      adapt: "Adaptability & Resilience",
+  <div class="grid">
+    <div class="card">
+      <div class="qtitle" id="qtitle"></div>
+      <div class="qtext" id="qtext"></div>
+      <div id="qarea"></div>
+
+      <div id="feedback" class="feedback"></div>
+
+      <div class="footer">
+        <button class="primary" id="submit">Submit</button>
+        <button id="next" disabled>Next</button>
+      </div>
+      <div class="mini" id="hint"></div>
+    </div>
+
+    <aside class="boss">
+      <div class="bossTop">
+        <div class="bossTitle">Hiring Manager</div>
+        <div class="bossMood" id="bossMood">🤨</div>
+      </div>
+      <div class="bossBubble" id="bossText">
+        I’m waiting for your answer. Think like a professional.
+      </div>
+    </aside>
+  </div>
+
+</div>
+
+<script>
+const TOTAL=7, PASS=6;
+let current=0, score=0, answered=false;
+
+const board=document.getElementById('board');
+const prog=document.getElementById('prog');
+const progTxt=document.getElementById('progTxt');
+
+const scoreEl=document.getElementById('score');
+const stepEl=document.getElementById('step');
+
+const qtitle=document.getElementById('qtitle');
+const qtext=document.getElementById('qtext');
+const qarea=document.getElementById('qarea');
+
+const feedback=document.getElementById('feedback');
+const submit=document.getElementById('submit');
+const next=document.getElementById('next');
+
+const hint=document.getElementById('hint');
+const bossMood=document.getElementById('bossMood');
+const bossText=document.getElementById('bossText');
+
+function setBoss(state){
+  if(state==="waiting"){
+    bossMood.textContent="🤨";
+    bossText.textContent="I’m waiting for your answer. Think like a professional.";
+    return;
+  }
+  if(state==="ok"){
+    bossMood.textContent="🙂";
+    bossText.textContent="Good. That sounds like someone I can hire.";
+    return;
+  }
+  if(state==="bad"){
+    bossMood.textContent="😬";
+    bossText.textContent="That’s risky. Think again next time.";
+    return;
+  }
+  if(state==="result"){
+    bossMood.textContent="🧑‍💼";
+    bossText.textContent="Final decision is based on your performance.";
+  }
+}
+
+function showFeedback(kind, text){
+  feedback.style.display="block";
+  feedback.className = "feedback " + kind; // ok | bad | neutral
+  feedback.textContent = text;
+}
+
+function setProgress(){
+  // show progress as "current stage number" out of TOTAL (stage 1 ≈ 14%)
+  const pct = Math.round(((current + 1) / TOTAL) * 100);
+  prog.style.width = pct + "%";
+  progTxt.textContent = "Progress: " + pct + "%";
+}
+
+const challenges = [
+
+/* 1: MCQ */
+{
+  title:"Stage 1 – Interview question",
+  text:"You must decide with unclear data and little time. Which skill helps most?",
+  render:c=>c.innerHTML=`
+  <div class="choices">
+    <label class="choice"><input type="radio" name="q1" value="a"> Leadership</label>
+    <label class="choice"><input type="radio" name="q1" value="b"> Critical thinking</label>
+    <label class="choice"><input type="radio" name="q1" value="c"> Creativity</label>
+  </div>`,
+  validate:()=> !!document.querySelector('input[name=q1]:checked'),
+  check:()=>document.querySelector('input[name=q1]:checked')?.value==="b"
+},
+
+/* 2: word pick (1 correct, 2 misleading, 2 from presentation) */
+{
+  title:"Stage 2 – Finish the sentence",
+  text:"“Resilience is built when we keep working despite ________ and setbacks.”",
+  render:c=>{
+    c.innerHTML=`
+      <input id="w2" readonly placeholder="click a word below…">
+      <div class="chips">
+        <span class="chip" data="difficulties">difficulties</span>
+        <span class="chip" data="pressure">pressure</span>
+        <span class="chip" data="stress">stress</span>
+        <span class="chip" data="leadership">leadership</span>
+        <span class="chip" data="creativity">creativity</span>
+      </div>
+      <div class="mini">Pick one. You will get feedback only after <b>Submit</b>.</div>
+    `;
+    c.querySelectorAll('.chip').forEach(x=>{
+      x.onclick=()=>c.querySelector('#w2').value=x.getAttribute('data');
+    });
+  },
+  validate:()=> (document.getElementById('w2')?.value || "").trim().length>0,
+  check:()=>document.getElementById('w2').value==="difficulties"
+},
+
+/* 3: True/False */
+{
+  title:"Stage 3 – True or False",
+  text:"Data literacy means understanding and interpreting data, not just collecting it.",
+  render:c=>c.innerHTML=`
+    <div class="choices">
+      <label class="choice"><input type="radio" name="q3" value="t"> True</label>
+      <label class="choice"><input type="radio" name="q3" value="f"> False</label>
+    </div>`,
+  validate:()=> !!document.querySelector('input[name=q3]:checked'),
+  check:()=>document.querySelector('input[name=q3]:checked')?.value==="t"
+},
+
+/* 4: Matching (dropdowns) */
+{
+  title:"Stage 4 – Match the situation",
+  text:"Pick the best option for each situation.",
+  render:c=>c.innerHTML=`
+    <div class="mini"><b>A:</b> New tool, same deadline</div>
+    <select id="a4">
+      <option value=""></option>
+      <option value="adapt">Adaptability</option>
+      <option value="crea">Creativity</option>
+      <option value="emp">Empathy</option>
+    </select>
+
+    <div class="mini" style="margin-top:10px;"><b>B:</b> Explain numbers to support a decision</div>
+    <select id="b4">
+      <option value=""></option>
+      <option value="lead">Leadership</option>
+      <option value="data">Data literacy</option>
+      <option value="res">Resilience</option>
+    </select>`,
+  validate:()=> (document.getElementById('a4')?.value && document.getElementById('b4')?.value),
+  check:()=>document.getElementById('a4').value==="adapt" && document.getElementById('b4').value==="data"
+},
+
+/* 5: Ordering */
+{
+  title:"Stage 5 – Order the steps",
+  text:"Click the steps in the correct order.",
+  render:c=>{
+    c.innerHTML=`
+      <div class="mini"><b>Your order:</b></div>
+      <div id="box5" class="mini" style="padding:10px;border:1px dashed #cbd5e1;border-radius:12px;background:rgba(255,255,255,.6);min-height:40px;display:flex;align-items:center;justify-content:space-between;gap:10px;">
+        <span id="orderText"></span>
+        <button id="reset5" type="button" style="padding:8px 10px;border-radius:10px;border:1px solid #e5e7eb;background:#fff;font-weight:800;cursor:pointer;">Reset</button>
+      </div>
+      <div class="chips">
+        <span class="chip" data="id">Identify problem</span>
+        <span class="chip" data="an">Analyze data</span>
+        <span class="chip" data="co">Compare options</span>
+        <span class="chip" data="ch">Choose & justify</span>
+      </div>
+      <div class="mini">Tip: It’s a simple workflow.</div>
+    `;
+    let arr=[];
+    const orderText=c.querySelector('#orderText');
+    const resetBtn=c.querySelector('#reset5');
+
+    function renderOrder(){ orderText.textContent = arr.join(" → "); }
+
+    c.querySelectorAll('.chip').forEach(x=>{
+      x.onclick=()=>{
+        const v=x.getAttribute('data');
+        if(arr.includes(v)) return;
+        arr.push(v);
+        renderOrder();
+      };
+    });
+
+    resetBtn.onclick=()=>{
+      arr=[];
+      renderOrder();
     };
 
-    // 7 situations (each has one best answer)
-   const STAGES = [
-  // 1️⃣ CASE RECOGNITION
-  {
-    skill: "data",
-    difficulty: "Medium",
-    title: "Which skill is mainly tested here?",
-    text:
-`You receive a dataset for a short report.
-You don’t know how the data was collected,
-what period it covers, or what some variables mean.`,
-    options: [
-      { id: "a", text: "Critical Thinking & Problem-Solving" },
-      { id: "b", text: "Adaptability & Resilience" },
-      { id: "c", text: "Data Literacy & Digital Fluency" },
-      { id: "d", text: "Leadership" },
-    ],
-    correct: "c",
-    managerGood: "Correct. Understanding data sources, structure, and limitations is data literacy.",
-    managerBad: "No. The challenge here is interpreting and validating data.",
+    window.__o5=arr;
+    renderOrder();
   },
+  validate:()=> (window.__o5||[]).length>0,
+  check:()=> (window.__o5||[]).join()==="id,an,co,ch"
+},
 
-  // 2️⃣ BEST EXPLANATION
-  {
-    skill: "critical",
-    difficulty: "Hard",
-    title: "What skill best explains the correct professional reaction?",
-    text:
-`Two analysts use the same data but reach opposite conclusions.
-A professional wants to understand why before choosing a side.`,
-    options: [
-      { id: "a", text: "Data Literacy & Digital Fluency" },
-      { id: "b", text: "Adaptability & Resilience" },
-      { id: "c", text: "Critical Thinking & Problem-Solving" },
-      { id: "d", text: "Creativity" },
-    ],
-    correct: "c",
-    managerGood: "Exactly. This requires evaluating assumptions and reasoning.",
-    managerBad: "No. The key issue is logic and interpretation, not tools or flexibility.",
-  },
+/* 6: Scenario dropdown */
+{
+  title:"Stage 6 – Career change",
+  text:"Your role changes because of AI. What skill matters most?",
+  render:c=>c.innerHTML=`
+    <select id="q6">
+      <option value=""></option>
+      <option value="crit">Critical thinking</option>
+      <option value="adapt">Adaptability & resilience</option>
+      <option value="lead">Leadership</option>
+    </select>`,
+  validate:()=> !!document.getElementById('q6')?.value,
+  check:()=>document.getElementById('q6').value==="adapt"
+},
 
-  // 3️⃣ ERROR SPOTTING
-  {
-    skill: "data",
-    difficulty: "Hard",
-    title: "Which skill helps you notice the main problem here?",
-    text:
-`An AI tool generates a confident recommendation.
-No one checks the data, assumptions, or context before using it.`,
-    options: [
-      { id: "a", text: "Adaptability & Resilience" },
-      { id: "b", text: "Critical Thinking & Problem-Solving" },
-      { id: "c", text: "Data Literacy & Digital Fluency" },
-      { id: "d", text: "Communication Skills" },
-    ],
-    correct: "c",
-    managerGood: "Correct. Responsible AI use requires data and digital literacy.",
-    managerBad: "No. The problem is blind trust in data-driven tools.",
-  },
+/* 7: Boss case (exactly 3) with trap option */
+{
+  title:"Stage 7 – Boss case",
+  text:"AI system fails, clients complain, team is stressed. Select exactly 3 actions.",
+  render:c=>{
+    c.innerHTML=`
+      <div class="mini">Rule: choose <b>exactly 3</b>.</div>
+      <div class="choices" id="bossChoices">
+        <label class="choice"><input type="checkbox" name="bc" value="panic"> Change random things fast</label>
+        <label class="choice"><input type="checkbox" name="bc" value="data"> Check errors and user reports</label>
+        <label class="choice"><input type="checkbox" name="bc" value="approval"> Wait for full management approval before acting</label>
+        <label class="choice"><input type="checkbox" name="bc" value="plan"> Test the fastest possible cause</label>
+        <label class="choice"><input type="checkbox" name="bc" value="blame"> Blame someone publicly</label>
+        <label class="choice"><input type="checkbox" name="bc" value="contain"> Turn off risky feature and inform clients</label>
+      </div>
+      <div class="mini">Hint: facts → fast test → reduce damage.</div>
+    `;
 
-  // 4️⃣ PRIORITY DECISION
-  {
-    skill: "adapt",
-    difficulty: "Medium",
-    title: "Which skill matters most in this situation?",
-    text:
-`Your tasks change every week.
-Deadlines overlap and priorities are unclear.`,
-    options: [
-      { id: "a", text: "Critical Thinking & Problem-Solving" },
-      { id: "b", text: "Data Literacy & Digital Fluency" },
-      { id: "c", text: "Adaptability & Resilience" },
-      { id: "d", text: "Technical Expertise" },
-    ],
-    correct: "c",
-    managerGood: "Yes. Handling constant change and pressure requires adaptability.",
-    managerBad: "No. The core challenge is coping with change, not analysis.",
+    // Enforce max 3 selections (UX), but still require exactly 3 in check()
+    const boxes=[...c.querySelectorAll('input[name=bc]')];
+    function sync(){
+      const picked = boxes.filter(b=>b.checked).length;
+      boxes.forEach(b=>{
+        if(!b.checked){
+          b.disabled = picked>=3;
+        }else{
+          b.disabled = false;
+        }
+      });
+    }
+    boxes.forEach(b=>b.addEventListener('change', sync));
+    sync();
   },
+  validate:()=> ([...document.querySelectorAll('input[name=bc]:checked')].length>0),
+  check:()=>{
+    const p=[...document.querySelectorAll('input[name=bc]:checked')].map(x=>x.value);
+    return p.length===3 && p.includes("data") && p.includes("plan") && p.includes("contain");
+  }
+}
 
-  // 5️⃣ AI & JUDGMENT
-  {
-    skill: "critical",
-    difficulty: "Hard",
-    title: "Which skill allows the most professional response?",
-    text:
-`AI suggests a strategic decision.
-The recommendation sounds logical but evidence is unclear.`,
-    options: [
-      { id: "a", text: "Critical Thinking & Problem-Solving" },
-      { id: "b", text: "Adaptability & Resilience" },
-      { id: "c", text: "Creativity & Innovation" },
-      { id: "d", text: "Automation Skills" },
-    ],
-    correct: "a",
-    managerGood: "Correct. You must evaluate assumptions and evidence, not trust confidence.",
-    managerBad: "No. The challenge is reasoning, not flexibility or creativity.",
-  },
-
-  // 6️⃣ FEEDBACK & FAILURE
-  {
-    skill: "adapt",
-    difficulty: "Hard",
-    title: "Which skill is demonstrated here?",
-    text:
-`After receiving negative feedback,
-an employee adjusts their approach and improves performance.`,
-    options: [
-      { id: "a", text: "Data Literacy & Digital Fluency" },
-      { id: "b", text: "Critical Thinking & Problem-Solving" },
-      { id: "c", text: "Adaptability & Resilience" },
-      { id: "d", text: "Leadership" },
-    ],
-    correct: "c",
-    managerGood: "Correct. Learning from setbacks shows resilience.",
-    managerBad: "No. This is about recovery and adjustment, not analysis.",
-  },
-
-  // 7️⃣ UNCERTAINTY & PRESSURE
-  {
-    skill: "critical",
-    difficulty: "Hard",
-    title: "Which skill is essential in this moment?",
-    text:
-`A team pushes for a decision based on intuition.
-There is pressure to agree quickly.`,
-    options: [
-      { id: "a", text: "Adaptability & Resilience" },
-      { id: "b", text: "Critical Thinking & Problem-Solving" },
-      { id: "c", text: "Data Literacy & Digital Fluency" },
-      { id: "d", text: "Communication Skills" },
-    ],
-    correct: "b",
-    managerGood: "Exactly. Questioning assumptions and asking for evidence is critical thinking.",
-    managerBad: "No. The key issue is reasoning, not communication or stress.",
-  },
 ];
 
-
-    // =========================
-    // HELPERS
-    // =========================
-    function fmtTime(ms){
-      const s = Math.floor(ms/1000);
-      const m = Math.floor(s/60);
-      const ss = String(s%60).padStart(2,"0");
-      return `${m}:${ss}`;
+function render(){
+  board.innerHTML="";
+  for(let i=0;i<TOTAL;i++){
+    const d=document.createElement('div');
+    d.className="cell"+(i<current?" done":"")+(i===current?" current":"");
+    d.textContent="Stage "+(i+1);
+    if(i===current){
+      const p=document.createElement('div');
+      p.className="pawn";
+      p.textContent="🧍";
+      d.appendChild(p);
     }
-    function setEmoji(type){
-      if(type==="good") emoji.textContent = "😄";
-      else if(type==="bad") emoji.textContent = "😬";
-      else if(type==="win") emoji.textContent = "🥳";
-      else if(type==="lose") emoji.textContent = "😵";
-      else emoji.textContent = "🙂";
-    }
-    function updateHeader(){
-      scorePill.textContent = `${score}/${STAGES.length}`;
-      stagePill.textContent = `${stageIndex+1}/${STAGES.length}`;
-      goalPill.textContent = `${GOAL}/${STAGES.length}`;
+    board.appendChild(d);
+  }
 
-      const pct = Math.round((stageIndex / STAGES.length) * 100);
-      barFill.style.width = `${pct}%`;
-      progressText.textContent = `Progress: ${pct}%`;
-    }
+  scoreEl.textContent=score;
+  stepEl.textContent=current+1;
+  setProgress();
 
-    function renderStage(){
-      const s = STAGES[stageIndex];
+  const ch=challenges[current];
+  qtitle.textContent=ch.title;
+  qtext.textContent=ch.text;
 
-      updateHeader();
-      selected = null;
-      locked = false;
+  qarea.innerHTML="";
+  feedback.style.display="none";
+  feedback.className="feedback";
 
-      // tag
-      skillTag.innerHTML = `<i>🎯</i><span>${SKILL_LABELS[s.skill]}</span>`;
-      difficulty.textContent = `Difficulty: ${s.difficulty}`;
+  submit.disabled=false;
+  next.disabled=true;
+  answered=false;
 
-      // text
-      qTitle.textContent = s.title;
-      qText.textContent = s.text;
+  hint.textContent = (current===TOTAL-1) ? "Final boss stage. Read carefully." : "";
+  setBoss("waiting");
 
-      // answers
-      answers.innerHTML = "";
-      s.options.forEach(opt=>{
-        const el = document.createElement("div");
-        el.className = "ans";
-        el.dataset.id = opt.id;
-        el.innerHTML = `
-          <div class="radio"></div>
-          <div class="txt">
-            <b>${opt.text}</b>
-            <small>Choose this option</small>
-          </div>
-        `;
-        el.addEventListener("click", ()=>{
-          if(locked) return;
-          selected = opt.id;
-          [...answers.children].forEach(x=>x.classList.remove("selected"));
-          el.classList.add("selected");
-          resultPill.style.display = "none";
-          bubble.textContent = "Good. Now submit your answer.";
-          setEmoji("neutral");
-        });
-        answers.appendChild(el);
-      });
+  ch.render(qarea);
+}
 
-      // buttons
-      submitBtn.classList.remove("disabled");
-      submitBtn.disabled = false;
-      nextBtn.classList.add("disabled");
-      nextBtn.disabled = true;
+submit.onclick=()=>{
+  if(answered) return;
 
-      // manager
-      bubble.textContent = "I’m waiting for your answer. Think like a professional.";
-      setEmoji("neutral");
+  const ch = challenges[current];
 
-      // result pill
-      resultPill.style.display = "none";
+  // Validation: don’t punish for “no selection”
+  if(typeof ch.validate === "function" && !ch.validate()){
+    showFeedback("neutral", "Choose an answer first.");
+    setBoss("waiting");
+    return;
+  }
 
-      // timer starts on first stage render
-      if(!startTime){
-        startTime = Date.now();
-        timerTick = setInterval(()=>{/* keep ticking to keep consistent */}, 250);
-      }
-    }
+  const ok = ch.check();
 
-    function submit(){
-      if(locked) return;
-      if(!selected){
-        resultPill.style.display = "inline-flex";
-        resultPill.className = "resultPill warn";
-        resultPill.textContent = "Pick an option first.";
-        bubble.textContent = "Don’t rush. Select an option, then submit.";
-        setEmoji("bad");
-        return;
-      }
+  showFeedback(ok ? "ok" : "bad", ok ? "Correct." : "Not correct.");
 
-      locked = true;
-      const s = STAGES[stageIndex];
-      const ok = selected === s.correct;
+  if(ok) score++;
+  scoreEl.textContent=score;
 
-      if(ok) score++;
+  setBoss(ok ? "ok" : "bad");
 
-      // feedback
-      resultPill.style.display = "inline-flex";
-      resultPill.className = "resultPill " + (ok ? "good" : "bad");
-      resultPill.textContent = ok ? "Correct ✅" : "Incorrect ❌";
+  answered=true;
+  submit.disabled=true;
+  next.disabled=false;
+};
 
-      bubble.textContent = ok ? s.managerGood : s.managerBad;
-      setEmoji(ok ? "good" : "bad");
+next.onclick=()=>{
+  current++;
+  if(current>=TOTAL){
+    setBoss("result");
+    prog.style.width = "100%";
+    progTxt.textContent = "Progress: 100%";
 
-      // lock selection styling (show correct if wrong)
-      if(!ok){
-        // mark correct option visually
-        [...answers.children].forEach(node=>{
-          const id = node.dataset.id;
-          if(id === s.correct){
-            node.style.borderColor = "rgba(34,197,94,.55)";
-            node.style.background = "rgba(34,197,94,.10)";
-          }
-        });
-      }
+    qtitle.textContent="Result";
+    qtext.innerHTML=`Score: <b>${score}/7</b> · Requirement: <b>${PASS}/7</b>`;
+    qarea.innerHTML = `
+      <div class="mini" style="margin-top:6px;">
+        ${score>=PASS
+          ? "<b>🎉 You got the job!</b> The manager likes your decisions under pressure."
+          : "<b>❌ Not hired.</b> You need better decision-making in real situations."}
+      </div>
+    `;
+    feedback.style.display="none";
+    submit.disabled=true;
+    next.disabled=true;
+    return;
+  }
+  render();
+};
 
-      // buttons
-      submitBtn.classList.add("disabled");
-      submitBtn.disabled = true;
-      nextBtn.classList.remove("disabled");
-      nextBtn.disabled = false;
+render();
+</script>
 
-      updateHeader();
-      const pct = Math.round(((stageIndex+1)/STAGES.length)*100);
-      barFill.style.width = `${pct}%`;
-      progressText.textContent = `Progress: ${pct}%`;
-    }
-
-    function next(){
-      if(stageIndex < STAGES.length - 1){
-        stageIndex++;
-        renderStage();
-      }else{
-        finish();
-      }
-    }
-
-    function finish(){
-      if(timerTick){ clearInterval(timerTick); timerTick = null; }
-      const time = startTime ? (Date.now() - startTime) : 0;
-
-      const passed = score >= GOAL;
-      modal.classList.add("show");
-
-      modalTitle.textContent = passed ? "Hired ✅" : "Not hired ❌";
-      modalDesc.textContent = passed
-        ? "Nice. You applied future skills in real situations."
-        : "Close. The job market rewards better decisions under pressure.";
-
-      mScore.textContent = `${score}/${STAGES.length}`;
-      mGoal.textContent = `${GOAL}/${STAGES.length}`;
-      mTime.textContent = fmtTime(time);
-
-      setEmoji(passed ? "win" : "lose");
-    }
-
-    function restart(){
-      if(timerTick){ clearInterval(timerTick); timerTick = null; }
-      stageIndex = 0;
-      score = 0;
-      selected = null;
-      locked = false;
-      startTime = null;
-      renderStage();
-    }
-
-    // =========================
-    // EVENTS
-    // =========================
-    submitBtn.addEventListener("click", submit);
-    nextBtn.addEventListener("click", next);
-    restartBtn.addEventListener("click", restart);
-
-    playAgainBtn.addEventListener("click", ()=>{
-      modal.classList.remove("show");
-      restart();
-    });
-    closeBtn.addEventListener("click", ()=>{
-      modal.classList.remove("show");
-    });
-    modal.addEventListener("click", (e)=>{
-      if(e.target === modal) modal.classList.remove("show");
-    });
-
-    // INIT
-    document.addEventListener("DOMContentLoaded", ()=>{
-      renderStage();
-    });
-  </script>
 </body>
 </html>
-
-
