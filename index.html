@@ -406,106 +406,111 @@
     };
 
     // 7 situations (each has one best answer)
-    const STAGES = [
+   const STAGES = [
+  // 1️⃣ CASE RECOGNITION
   {
     skill: "data",
     difficulty: "Medium",
-    title: "Which skill is primarily required in this situation?",
+    title: "Which skill is mainly tested here?",
     text:
-`You are asked to prepare a short insight for management.
-You receive a dataset, but you are unsure how the data was collected,
-what time period it covers, and what some columns actually mean.`,
+`You receive a dataset for a short report.
+You don’t know how the data was collected,
+what period it covers, or what some variables mean.`,
     options: [
-      { id: "a", text: "Adaptability & Resilience" },
-      { id: "b", text: "Critical Thinking & Problem-Solving" },
+      { id: "a", text: "Critical Thinking & Problem-Solving" },
+      { id: "b", text: "Adaptability & Resilience" },
       { id: "c", text: "Data Literacy & Digital Fluency" },
-      { id: "d", text: "Leadership & Social Influence" },
+      { id: "d", text: "Leadership" },
     ],
     correct: "c",
-    managerGood: "Correct. Understanding data sources, structure, and limitations is core to data literacy.",
-    managerBad: "Not quite. The key issue here is understanding and interpreting data correctly.",
+    managerGood: "Correct. Understanding data sources, structure, and limitations is data literacy.",
+    managerBad: "No. The challenge here is interpreting and validating data.",
   },
 
+  // 2️⃣ BEST EXPLANATION
   {
     skill: "critical",
     difficulty: "Hard",
-    title: "Which skill best matches this workplace challenge?",
+    title: "What skill best explains the correct professional reaction?",
     text:
-`Two reports based on the same data lead to opposite conclusions.
-Both seem logical, but they use different assumptions and metrics.`,
+`Two analysts use the same data but reach opposite conclusions.
+A professional wants to understand why before choosing a side.`,
     options: [
       { id: "a", text: "Data Literacy & Digital Fluency" },
-      { id: "b", text: "Critical Thinking & Problem-Solving" },
-      { id: "c", text: "Adaptability & Resilience" },
-      { id: "d", text: "Creativity & Innovation" },
-    ],
-    correct: "b",
-    managerGood: "Exactly. This requires evaluating assumptions, methods, and reasoning.",
-    managerBad: "No. The challenge is not the data itself, but how conclusions are drawn from it.",
-  },
-
-  {
-    skill: "adapt",
-    difficulty: "Medium",
-    title: "Which future skill is most important here?",
-    text:
-`Your role changes several times within a year.
-New tools appear, priorities shift, and expectations evolve.`,
-    options: [
-      { id: "a", text: "Critical Thinking & Problem-Solving" },
       { id: "b", text: "Adaptability & Resilience" },
-      { id: "c", text: "Data Literacy & Digital Fluency" },
-      { id: "d", text: "Technical Specialization" },
+      { id: "c", text: "Critical Thinking & Problem-Solving" },
+      { id: "d", text: "Creativity" },
     ],
-    correct: "b",
-    managerGood: "Correct. The ability to adjust and stay effective under change defines adaptability.",
-    managerBad: "Not quite. The core challenge here is coping with continuous change.",
+    correct: "c",
+    managerGood: "Exactly. This requires evaluating assumptions and reasoning.",
+    managerBad: "No. The key issue is logic and interpretation, not tools or flexibility.",
   },
 
+  // 3️⃣ ERROR SPOTTING
   {
     skill: "data",
     difficulty: "Hard",
-    title: "Which skill is being tested in this situation?",
+    title: "Which skill helps you notice the main problem here?",
     text:
 `An AI tool generates a confident recommendation.
-Before using it, you want to understand how reliable the output is
-and whether it fits your business context.`,
-    options: [
-      { id: "a", text: "Critical Thinking & Problem-Solving" },
-      { id: "b", text: "Adaptability & Resilience" },
-      { id: "c", text: "Data Literacy & Digital Fluency" },
-      { id: "d", text: "Creativity & Innovation" },
-    ],
-    correct: "c",
-    managerGood: "Correct. Responsible AI use is part of modern data and digital literacy.",
-    managerBad: "No. This is mainly about understanding and evaluating data-driven tools.",
-  },
-
-  {
-    skill: "critical",
-    difficulty: "Medium",
-    title: "Which skill is essential in this case?",
-    text:
-`A manager asks you to recommend a solution,
-even though the available information is incomplete and uncertain.`,
+No one checks the data, assumptions, or context before using it.`,
     options: [
       { id: "a", text: "Adaptability & Resilience" },
       { id: "b", text: "Critical Thinking & Problem-Solving" },
       { id: "c", text: "Data Literacy & Digital Fluency" },
-      { id: "d", text: "Teamwork" },
+      { id: "d", text: "Communication Skills" },
     ],
-    correct: "b",
-    managerGood: "Yes. Making reasoned decisions under uncertainty is critical thinking.",
-    managerBad: "No. The main challenge is reasoning, not stress or tools.",
+    correct: "c",
+    managerGood: "Correct. Responsible AI use requires data and digital literacy.",
+    managerBad: "No. The problem is blind trust in data-driven tools.",
   },
 
+  // 4️⃣ PRIORITY DECISION
+  {
+    skill: "adapt",
+    difficulty: "Medium",
+    title: "Which skill matters most in this situation?",
+    text:
+`Your tasks change every week.
+Deadlines overlap and priorities are unclear.`,
+    options: [
+      { id: "a", text: "Critical Thinking & Problem-Solving" },
+      { id: "b", text: "Data Literacy & Digital Fluency" },
+      { id: "c", text: "Adaptability & Resilience" },
+      { id: "d", text: "Technical Expertise" },
+    ],
+    correct: "c",
+    managerGood: "Yes. Handling constant change and pressure requires adaptability.",
+    managerBad: "No. The core challenge is coping with change, not analysis.",
+  },
+
+  // 5️⃣ AI & JUDGMENT
+  {
+    skill: "critical",
+    difficulty: "Hard",
+    title: "Which skill allows the most professional response?",
+    text:
+`AI suggests a strategic decision.
+The recommendation sounds logical but evidence is unclear.`,
+    options: [
+      { id: "a", text: "Critical Thinking & Problem-Solving" },
+      { id: "b", text: "Adaptability & Resilience" },
+      { id: "c", text: "Creativity & Innovation" },
+      { id: "d", text: "Automation Skills" },
+    ],
+    correct: "a",
+    managerGood: "Correct. You must evaluate assumptions and evidence, not trust confidence.",
+    managerBad: "No. The challenge is reasoning, not flexibility or creativity.",
+  },
+
+  // 6️⃣ FEEDBACK & FAILURE
   {
     skill: "adapt",
     difficulty: "Hard",
-    title: "Which skill best applies to this situation?",
+    title: "Which skill is demonstrated here?",
     text:
-`After a failed presentation, you receive negative feedback.
-You must recover quickly and improve for the next meeting.`,
+`After receiving negative feedback,
+an employee adjusts their approach and improves performance.`,
     options: [
       { id: "a", text: "Data Literacy & Digital Fluency" },
       { id: "b", text: "Critical Thinking & Problem-Solving" },
@@ -513,71 +518,30 @@ You must recover quickly and improve for the next meeting.`,
       { id: "d", text: "Leadership" },
     ],
     correct: "c",
-    managerGood: "Correct. Learning from setbacks and continuing effectively shows resilience.",
-    managerBad: "Not exactly. The focus here is on handling failure and bouncing back.",
+    managerGood: "Correct. Learning from setbacks shows resilience.",
+    managerBad: "No. This is about recovery and adjustment, not analysis.",
   },
 
+  // 7️⃣ UNCERTAINTY & PRESSURE
   {
     skill: "critical",
     difficulty: "Hard",
-    title: "Which skill is most important here?",
+    title: "Which skill is essential in this moment?",
     text:
-`During a meeting, someone argues for a decision
-based mainly on intuition and confidence rather than evidence.`,
+`A team pushes for a decision based on intuition.
+There is pressure to agree quickly.`,
     options: [
       { id: "a", text: "Adaptability & Resilience" },
-      { id: "b", text: "Data Literacy & Digital Fluency" },
-      { id: "c", text: "Critical Thinking & Problem-Solving" },
+      { id: "b", text: "Critical Thinking & Problem-Solving" },
+      { id: "c", text: "Data Literacy & Digital Fluency" },
       { id: "d", text: "Communication Skills" },
     ],
-    correct: "c",
+    correct: "b",
     managerGood: "Exactly. Questioning assumptions and asking for evidence is critical thinking.",
-    managerBad: "No. The key issue is evaluating reasoning, not communication style.",
+    managerBad: "No. The key issue is reasoning, not communication or stress.",
   },
 ];
-    // =========================
-    // STATE
-    // =========================
-    let stageIndex = 0;
-    let score = 0;
-    let selected = null;
-    let locked = false;
-    let startTime = null;
-    let timerTick = null;
 
-    // =========================
-    // DOM
-    // =========================
-    const $ = (id) => document.getElementById(id);
-
-    const scorePill = $("scorePill");
-    const stagePill = $("stagePill");
-    const goalPill = $("goalPill");
-    const barFill = $("barFill");
-    const progressText = $("progressText");
-
-    const skillTag = $("skillTag");
-    const difficulty = $("difficulty");
-    const qTitle = $("qTitle");
-    const qText = $("qText");
-    const answers = $("answers");
-
-    const submitBtn = $("submitBtn");
-    const nextBtn = $("nextBtn");
-    const restartBtn = $("restartBtn");
-
-    const bubble = $("bubble");
-    const emoji = $("emoji");
-    const resultPill = $("resultPill");
-
-    const modal = $("modal");
-    const modalTitle = $("modalTitle");
-    const modalDesc = $("modalDesc");
-    const mScore = $("mScore");
-    const mGoal = $("mGoal");
-    const mTime = $("mTime");
-    const playAgainBtn = $("playAgainBtn");
-    const closeBtn = $("closeBtn");
 
     // =========================
     // HELPERS
@@ -777,4 +741,5 @@ based mainly on intuition and confidence rather than evidence.`,
   </script>
 </body>
 </html>
+
 
