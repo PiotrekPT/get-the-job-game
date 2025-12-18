@@ -431,14 +431,51 @@ const challenges = [
 
 /* 3: True/False */
 {
-  title:"Stage 3 – True or False",
-  text:"Data literacy means understanding and interpreting data, not just collecting it.",
-  render:c=>c.innerHTML=`
-    <div class="choices">
-      <label class="choice"><input type="radio" name="q3" value="t"> True</label>
-      <label class="choice"><input type="radio" name="q3" value="f"> False</label>
-    </div>`,
-  check:()=>document.querySelector('input[name=q3]:checked')?.value==="t"
+ {
+  title:"Stage 3 – Office Detective (Evidence first)",
+  text:"A problem appears just before a deadline. No instructions are given. One employee notices a pattern in previous issues, tests one solution instead of many, and explains the decision clearly to the team.",
+  render:c=>{
+    c.innerHTML = `
+      <div class="mini"><b>Step 1:</b> Select exactly <b>2</b> pieces of evidence from the case.</div>
+      <div class="choices">
+        <label class="choice"><input type="checkbox" name="e3" value="pattern"> They noticed a pattern in previous issues</label>
+        <label class="choice"><input type="checkbox" name="e3" value="one_test"> They tested one solution (not many)</label>
+        <label class="choice"><input type="checkbox" name="e3" value="team_explain"> They explained the decision clearly to the team</label>
+        <label class="choice"><input type="checkbox" name="e3" value="no_deadline"> They had plenty of time (no deadline pressure)</label>
+      </div>
+
+      <div style="height:10px"></div>
+
+      <div class="mini"><b>Step 2:</b> Now select exactly <b>2</b> conclusions (skills).</div>
+      <div class="choices">
+        <label class="choice"><input type="checkbox" name="c3" value="pattern_skill"> Pattern recognition</label>
+        <label class="choice"><input type="checkbox" name="c3" value="decision_skill"> Decision-making</label>
+        <label class="choice"><input type="checkbox" name="c3" value="creative_skill"> Creativity</label>
+        <label class="choice"><input type="checkbox" name="c3" value="leader_skill"> Leadership</label>
+        <label class="choice"><input type="checkbox" name="c3" value="communication_skill"> Communication</label>
+      </div>
+
+      <div class="mini">Rule: You must get both steps right. Guessing will hurt.</div>
+    `;
+  },
+  check:()=>{
+    const e=[...document.querySelectorAll('input[name=e3]:checked')].map(x=>x.value);
+    const c=[...document.querySelectorAll('input[name=c3]:checked')].map(x=>x.value);
+
+    // Step 1: exactly 2 evidence
+    if(e.length!==2) return false;
+    // Correct evidence: pattern + one_test (team_explain is true but less diagnostic; this makes it harder)
+    const okEvidence = e.includes("pattern") && e.includes("one_test");
+
+    // Step 2: exactly 2 conclusions
+    if(c.length!==2) return false;
+    // Correct conclusions: pattern recognition + decision-making
+    const okConclusions = c.includes("pattern_skill") && c.includes("decision_skill");
+
+    return okEvidence && okConclusions;
+  }
+},
+
 },
 
 /* 4: Matching (dropdowns) */
@@ -622,3 +659,4 @@ render();
 
 </body>
 </html>
+
