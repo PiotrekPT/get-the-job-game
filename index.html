@@ -407,125 +407,134 @@
 
     // 7 situations (each has one best answer)
     const STAGES = [
-      {
-        skill: "data",
-        difficulty: "Easy",
-        title: "You get a dataset from marketing. What do you do first?",
-        text:
-`A colleague sends you a spreadsheet with customer data.
-You need to prepare quick insights for a meeting in 2 hours.`,
-        options: [
-          { id: "a", text: "Start making conclusions immediately based on the first rows." },
-          { id: "b", text: "Check data quality: missing values, outliers, and definitions of columns." },
-          { id: "c", text: "Ask ChatGPT to summarize it without looking at the data." },
-          { id: "d", text: "Ignore the dataset and talk about opinions in the meeting." },
-        ],
-        correct: "b",
-        managerGood: "Good. Data literacy starts with checking quality and context before conclusions.",
-        managerBad: "No. Jumping to conclusions is how people make confident but wrong decisions.",
-      },
-      {
-        skill: "critical",
-        difficulty: "Medium",
-        title: "Your team gets two conflicting reports. What’s the best move?",
-        text:
-`Report A says sales are rising.
-Report B says sales are falling.
-You must explain the situation to your supervisor.`,
-        options: [
-          { id: "a", text: "Pick the report that looks nicer and present it." },
-          { id: "b", text: "Compare sources, methods, time periods, and definitions before deciding." },
-          { id: "c", text: "Assume both are wrong and do nothing." },
-          { id: "d", text: "Ask a friend what to think." },
-        ],
-        correct: "b",
-        managerGood: "Exactly. Critical thinking means checking assumptions, sources, and definitions.",
-        managerBad: "That’s not critical thinking. You need evidence and reasoning, not vibes.",
-      },
-      {
-        skill: "adapt",
-        difficulty: "Easy",
-        title: "Halfway through a project, requirements change. What do you do?",
-        text:
-`The client changes priorities and your plan no longer matches the new goal.
-The deadline stays the same.`,
-        options: [
-          { id: "a", text: "Complain and stick to the old plan because it’s already started." },
-          { id: "b", text: "Freeze and wait until someone tells you exactly what to do." },
-          { id: "c", text: "Reassess priorities, adjust the plan, and communicate changes quickly." },
-          { id: "d", text: "Quit the project because it’s unfair." },
-        ],
-        correct: "c",
-        managerGood: "Perfect. Adaptability is adjusting fast and communicating clearly under change.",
-        managerBad: "No. In real work, change is normal. You need to adjust and keep moving.",
-      },
-      {
-        skill: "data",
-        difficulty: "Medium",
-        title: "AI gives you an answer. What’s the most professional reaction?",
-        text:
-`You use an AI tool and it generates a confident-looking summary.
-You will present it to a team.`,
-        options: [
-          { id: "a", text: "Use it as-is because AI is usually correct." },
-          { id: "b", text: "Verify key facts, ask for sources, and cross-check with data." },
-          { id: "c", text: "Hide the fact that you used AI." },
-          { id: "d", text: "Replace numbers with guesses to sound convincing." },
-        ],
-        correct: "b",
-        managerGood: "Good. Digital fluency includes verification and responsible use of AI.",
-        managerBad: "No. Professional work requires validation. AI output is not automatically truth.",
-      },
-      {
-        skill: "critical",
-        difficulty: "Hard",
-        title: "Your boss asks for a decision with limited information. What do you do?",
-        text:
-`You don’t have perfect data, but you must recommend a direction today.`,
-        options: [
-          { id: "a", text: "Delay everything until you have 100% certainty." },
-          { id: "b", text: "Make a random choice to move fast." },
-          { id: "c", text: "State assumptions, compare options, estimate risks, and recommend the best one." },
-          { id: "d", text: "Copy what another company did without thinking." },
-        ],
-        correct: "c",
-        managerGood: "Strong. Critical thinking is about structured reasoning, even with uncertainty.",
-        managerBad: "No. You can’t outsource thinking. You need assumptions, trade-offs, and reasoning.",
-      },
-      {
-        skill: "adapt",
-        difficulty: "Medium",
-        title: "You made a mistake in front of the team. What shows resilience?",
-        text:
-`Your dashboard had an error and the meeting got awkward.`,
-        options: [
-          { id: "a", text: "Blame someone else so you don’t look bad." },
-          { id: "b", text: "Own the mistake, fix it, explain what you’ll change next time." },
-          { id: "c", text: "Avoid future meetings to reduce stress." },
-          { id: "d", text: "Pretend it didn’t happen." },
-        ],
-        correct: "b",
-        managerGood: "Exactly. Resilience is recovery + learning, not perfection.",
-        managerBad: "That’s avoidance, not resilience. Resilience is handling setbacks and improving.",
-      },
-      {
-        skill: "critical",
-        difficulty: "Medium",
-        title: "A teammate pushes a trendy solution. What’s the best response?",
-        text:
-`Someone insists: “Everyone uses this tool, so we must too.”`,
-        options: [
-          { id: "a", text: "Agree instantly to avoid conflict." },
-          { id: "b", text: "Ask what problem we’re solving and what evidence supports this choice." },
-          { id: "c", text: "Reject it because you personally dislike trends." },
-          { id: "d", text: "Ignore the teammate and work alone." },
-        ],
-        correct: "b",
-        managerGood: "Great. You questioned the assumption and focused on the problem, not hype.",
-        managerBad: "No. You need to evaluate reasons and evidence, not follow trends blindly.",
-      },
-    ];
+  {
+    skill: "data",
+    difficulty: "Medium",
+    title: "Which skill is primarily required in this situation?",
+    text:
+`You are asked to prepare a short insight for management.
+You receive a dataset, but you are unsure how the data was collected,
+what time period it covers, and what some columns actually mean.`,
+    options: [
+      { id: "a", text: "Adaptability & Resilience" },
+      { id: "b", text: "Critical Thinking & Problem-Solving" },
+      { id: "c", text: "Data Literacy & Digital Fluency" },
+      { id: "d", text: "Leadership & Social Influence" },
+    ],
+    correct: "c",
+    managerGood: "Correct. Understanding data sources, structure, and limitations is core to data literacy.",
+    managerBad: "Not quite. The key issue here is understanding and interpreting data correctly.",
+  },
 
+  {
+    skill: "critical",
+    difficulty: "Hard",
+    title: "Which skill best matches this workplace challenge?",
+    text:
+`Two reports based on the same data lead to opposite conclusions.
+Both seem logical, but they use different assumptions and metrics.`,
+    options: [
+      { id: "a", text: "Data Literacy & Digital Fluency" },
+      { id: "b", text: "Critical Thinking & Problem-Solving" },
+      { id: "c", text: "Adaptability & Resilience" },
+      { id: "d", text: "Creativity & Innovation" },
+    ],
+    correct: "b",
+    managerGood: "Exactly. This requires evaluating assumptions, methods, and reasoning.",
+    managerBad: "No. The challenge is not the data itself, but how conclusions are drawn from it.",
+  },
+
+  {
+    skill: "adapt",
+    difficulty: "Medium",
+    title: "Which future skill is most important here?",
+    text:
+`Your role changes several times within a year.
+New tools appear, priorities shift, and expectations evolve.`,
+    options: [
+      { id: "a", text: "Critical Thinking & Problem-Solving" },
+      { id: "b", text: "Adaptability & Resilience" },
+      { id: "c", text: "Data Literacy & Digital Fluency" },
+      { id: "d", text: "Technical Specialization" },
+    ],
+    correct: "b",
+    managerGood: "Correct. The ability to adjust and stay effective under change defines adaptability.",
+    managerBad: "Not quite. The core challenge here is coping with continuous change.",
+  },
+
+  {
+    skill: "data",
+    difficulty: "Hard",
+    title: "Which skill is being tested in this situation?",
+    text:
+`An AI tool generates a confident recommendation.
+Before using it, you want to understand how reliable the output is
+and whether it fits your business context.`,
+    options: [
+      { id: "a", text: "Critical Thinking & Problem-Solving" },
+      { id: "b", text: "Adaptability & Resilience" },
+      { id: "c", text: "Data Literacy & Digital Fluency" },
+      { id: "d", text: "Creativity & Innovation" },
+    ],
+    correct: "c",
+    managerGood: "Correct. Responsible AI use is part of modern data and digital literacy.",
+    managerBad: "No. This is mainly about understanding and evaluating data-driven tools.",
+  },
+
+  {
+    skill: "critical",
+    difficulty: "Medium",
+    title: "Which skill is essential in this case?",
+    text:
+`A manager asks you to recommend a solution,
+even though the available information is incomplete and uncertain.`,
+    options: [
+      { id: "a", text: "Adaptability & Resilience" },
+      { id: "b", text: "Critical Thinking & Problem-Solving" },
+      { id: "c", text: "Data Literacy & Digital Fluency" },
+      { id: "d", text: "Teamwork" },
+    ],
+    correct: "b",
+    managerGood: "Yes. Making reasoned decisions under uncertainty is critical thinking.",
+    managerBad: "No. The main challenge is reasoning, not stress or tools.",
+  },
+
+  {
+    skill: "adapt",
+    difficulty: "Hard",
+    title: "Which skill best applies to this situation?",
+    text:
+`After a failed presentation, you receive negative feedback.
+You must recover quickly and improve for the next meeting.`,
+    options: [
+      { id: "a", text: "Data Literacy & Digital Fluency" },
+      { id: "b", text: "Critical Thinking & Problem-Solving" },
+      { id: "c", text: "Adaptability & Resilience" },
+      { id: "d", text: "Leadership" },
+    ],
+    correct: "c",
+    managerGood: "Correct. Learning from setbacks and continuing effectively shows resilience.",
+    managerBad: "Not exactly. The focus here is on handling failure and bouncing back.",
+  },
+
+  {
+    skill: "critical",
+    difficulty: "Hard",
+    title: "Which skill is most important here?",
+    text:
+`During a meeting, someone argues for a decision
+based mainly on intuition and confidence rather than evidence.`,
+    options: [
+      { id: "a", text: "Adaptability & Resilience" },
+      { id: "b", text: "Data Literacy & Digital Fluency" },
+      { id: "c", text: "Critical Thinking & Problem-Solving" },
+      { id: "d", text: "Communication Skills" },
+    ],
+    correct: "c",
+    managerGood: "Exactly. Questioning assumptions and asking for evidence is critical thinking.",
+    managerBad: "No. The key issue is evaluating reasoning, not communication style.",
+  },
+];
     // =========================
     // STATE
     // =========================
@@ -768,3 +777,4 @@ You will present it to a team.`,
   </script>
 </body>
 </html>
+
